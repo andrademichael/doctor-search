@@ -1,12 +1,12 @@
-const doctorSearch = require('./../js/doctorSearch.js').doctorSearchModule;
+var doctorSearch = require('./../js/doctorSearch.js').doctorSearchModule;
 
 $(function() {
   $("searchForm").submit(function(event) {
-    event.preventDefault;
+    event.preventDefault();
     condition = $("#conditionInput").val();
-    foundDoctors = doctorSearch(condition);
+    displayDoctors = doctorSearch(condition);
     for (var i = 0; i < localDoctors.length; i++) {
-      $("#doctorDisplay").push("<li>" + foundDoctors[i] + "</li>")
+      $("#doctorDisplay").push("<li>" + foundDoctors[i] + "</li>");
     }
   });
 });
