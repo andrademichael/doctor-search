@@ -1,12 +1,13 @@
 var apiKey = require('./../.env').apiKey;
+var doctor = require('./../js/doctorSearch.js').doctorModule;
 
-var doctorSearch = require('./../js/doctorSearch.js').doctorSearchModule;
+var foundDoctors = [];
 
 $(function() {
   $("#searchForm").submit(function(event) {
     event.preventDefault();
-    conditionType = $("#conditionInput").val();
-    displayDoctors = doctorSearch(conditionType);
+    var conditionType = $("#conditionInput").val();
+    var localDoctors = doctorSearch(conditionType);
     for (var i = 0; i < localDoctors.length; i++) {
       $("#doctorDisplay").push("<li>" + foundDoctors[i] + "</li>");
     }
