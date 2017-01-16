@@ -1,5 +1,4 @@
-var apiKey = require('./../.env').apiKey;
-var doctor = require('./../js/doctorSearch.js').doctorModule;
+var Doctor = ('./../js/doctorSearch.js').doctorModule;
 
 var displayDoctors = function(results) {
   for (var i = 0; i < results.length; i++) {
@@ -7,14 +6,12 @@ var displayDoctors = function(results) {
   }
 };
 
-var foundDoctors = [];
-
-$(function() {
+$(document).ready(function() {
+  var currentSearch = new Doctor();
   $("#searchForm").submit(function(event) {
     event.preventDefault();
-    var currentSearch = new Doctor();
     var conditionName = $("#conditionInput").val();
     $("#conditionInput").val("");
-    var foundDoctors = currentSearch.getDoctors(conditionName);
+    currentSearch.getDoctors(conditionName, displayDoctors);
   });
 });

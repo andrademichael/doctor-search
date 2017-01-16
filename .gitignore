@@ -1,6 +1,21 @@
-.env
-node_modules/
-.DS_Store
-bower_components/
-build/
-tmp/
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/build
+
+# dependencies
+/node_modules
+/bower_components
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log*
+testem.log
+
+/.env
+/.DS_Store

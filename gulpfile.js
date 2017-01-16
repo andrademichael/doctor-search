@@ -1,11 +1,12 @@
 //declare dependencies
 var gulp = require('gulp');
+
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var utilities = require('gulp-util');
 var jshint = require('gulp-jshint');
 var del = require('del');
-var browserify = require('browserify');
+var browserify = require('gulp-browserify');
 var source = require('vinyl-source-stream');
 
 var lib = require('bower-files')({
@@ -65,7 +66,7 @@ gulp.task("minifyScripts", ["jsBrowserify"], function(){
 
 gulp.task('clean'), function() {
   return del(['build', 'tmp']);
-}
+};
 
 gulp.task('build', ['clean'], function() {
   if (buildProduction) {
@@ -111,8 +112,8 @@ gulp.task('htmlBuild', function() {
 
 gulp.task('cssBuild', function() {
   return gulp.src('scss/*.scss')
-  .pipe(sourcemaps.init())
-  .pipe(sass())
-  .pipe(sourcemaps.write())
-  .pipe(browserSync.stream());
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(sourcemaps.write())
+    .pipe(browserSync.stream());
 });
