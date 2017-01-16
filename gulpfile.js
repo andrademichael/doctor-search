@@ -1,3 +1,4 @@
+//declare dependencies
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -5,8 +6,8 @@ var utilities = require('gulp-util');
 var jshint = require('gulp-jshint');
 var del = require('del');
 var browserify = require('browserify');
-var browserSync = require('browser-sync').create();
 var source = require('vinyl-source-stream');
+
 var lib = require('bower-files')({
   "overrides":{
     "bootstrap" : {
@@ -20,6 +21,9 @@ var lib = require('bower-files')({
 });
 
 var buildProduction = utilities.env.production;
+
+var browserSync = require('browser-sync').create();
+var sass = require('gulp-sass');
 
 //Bower Tasks
 
@@ -72,7 +76,7 @@ gulp.task('build', ['clean'], function() {
   gulp.start('bower');
 });
 
-gulp.task('serve', function() {
+gulp.task('serve', ['build'], function() {
   browserSync.init({
     server: {
       baseDir: "./",
@@ -85,4 +89,30 @@ gulp.task("jshint", function() {
   return gulp.src(["js/*.js"])
     .pipe(jshint())
     .pipe(jshint.reporter("default"));
+});
+
+//watchers and subtasks
+gulp.watch(['js/*.js'], ['jsBuild']);
+gulp.watch(['bower.json'], ['bowerBuild']);
+gulp.watch(['*.html'], ['htmlBuild']);
+gulp.watch("scss/*.scss)", ['cssBuild']);
+
+gulp.task('jsBuild', ['jsBrowserify', 'jshint'], function() {
+  browserSync.reload();
+});
+
+gulp.task('bowerBuild', ['bower'], function() {
+  browserSync.reload();
+});
+
+gulp.task('htmlBuild', function() {
+  browserSync.reload();
+});
+
+gulp.task('cssBuild', function() {
+  return gulp.src('scss/*.scss')
+  .pipe(sourcemaps.init())
+  .pipe(sass())
+  .pipe(sourcemaps.write())
+  .pipe(browserSync.stream());
 });
